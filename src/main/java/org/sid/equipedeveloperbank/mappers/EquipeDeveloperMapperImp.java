@@ -3,6 +3,9 @@ package org.sid.equipedeveloperbank.mappers;
 import org.sid.equipedeveloperbank.dtos.DeveloperDto;
 import org.sid.equipedeveloperbank.entities.Developer;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+@Service
 
 public class EquipeDeveloperMapperImp {
 

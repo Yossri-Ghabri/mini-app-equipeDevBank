@@ -1,5 +1,6 @@
 package org.sid.equipedeveloperbank;
 
+import org.sid.equipedeveloperbank.dtos.DeveloperDto;
 import org.sid.equipedeveloperbank.entities.*;
 import org.sid.equipedeveloperbank.enums.AccountStatus;
 import org.sid.equipedeveloperbank.enums.BadgeExtern;
@@ -8,6 +9,7 @@ import org.sid.equipedeveloperbank.enums.TypeOperation;
 import org.sid.equipedeveloperbank.repositories.DeveloperBankOperationRepository;
 import org.sid.equipedeveloperbank.repositories.DeveloperRepository;
 import org.sid.equipedeveloperbank.repositories.EquipeDevBankRepository;
+import org.sid.equipedeveloperbank.services.EquipeDevBankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +29,7 @@ public class EquipeDeveloperBankApplication {
         System.out.println("Hello is new project");
     }
 
-    @Bean
+   // @Bean
     CommandLineRunner addInBas(DeveloperRepository developerRepository,
                                EquipeDevBankRepository equipeDevBankRepository,
                                DeveloperBankOperationRepository developerBankOperationRepository){
@@ -78,6 +80,18 @@ public class EquipeDeveloperBankApplication {
                 System.out.println("get badge developer intern => "+((InternDeveloper)equipeDevBank).getBadgeIntern());
             }
 
+        };
+    }
+
+      @Bean
+    CommandLineRunner addInBase(EquipeDevBankService equipeDevBankService){
+        return args -> {
+            Stream.of("alex","jhon","yossri","pedro").forEach(developerName->{
+                DeveloperDto developerDto = new DeveloperDto();
+                developerDto.setName(developerName);
+                developerDto.setEmail(developerName+"@bankBnp.com");
+                equipeDevBankService.saveDeveloper(developerDto);
+            });
         };
     }
 

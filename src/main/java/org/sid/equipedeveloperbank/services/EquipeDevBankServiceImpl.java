@@ -1,19 +1,34 @@
 package org.sid.equipedeveloperbank.services;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sid.equipedeveloperbank.dtos.DeveloperDto;
 import org.sid.equipedeveloperbank.dtos.EquipeDevBankDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankExternDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankInternDto;
+import org.sid.equipedeveloperbank.entities.Developer;
+import org.sid.equipedeveloperbank.mappers.EquipeDeveloperMapperImp;
+import org.sid.equipedeveloperbank.repositories.DeveloperRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service @Transactional
-public class EquipeDevBankServiceImpl implements EquipeDevBankService{
+@Service
+@Transactional
+@AllArgsConstructor
+@Slf4j
+public class EquipeDevBankServiceImpl implements EquipeDevBankService {
+
+    private EquipeDeveloperMapperImp dtoDeveloperMapper;
+    private DeveloperRepository developerRepository;
+
     @Override
     public DeveloperDto saveDeveloper(DeveloperDto developerDto) {
-        return null;
+        log.info("Saving New Developer");
+        Developer developer = dtoDeveloperMapper.fromDeveloperDto(developerDto);
+        Developer savingDeveloper = developerRepository.save(developer);
+        return dtoDeveloperMapper.fromEntityDeveloper(savingDeveloper);
     }
 
     @Override
