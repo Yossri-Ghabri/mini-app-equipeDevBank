@@ -1,9 +1,6 @@
 package org.sid.equipedeveloperbank;
 
-import org.sid.equipedeveloperbank.entities.Developer;
-import org.sid.equipedeveloperbank.entities.DeveloperBankOperation;
-import org.sid.equipedeveloperbank.entities.ExternDeveloper;
-import org.sid.equipedeveloperbank.entities.InternDeveloper;
+import org.sid.equipedeveloperbank.entities.*;
 import org.sid.equipedeveloperbank.enums.AccountStatus;
 import org.sid.equipedeveloperbank.enums.BadgeExtern;
 import org.sid.equipedeveloperbank.enums.BadgeIntern;
@@ -71,6 +68,15 @@ public class EquipeDeveloperBankApplication {
                     developerBankOperationRepository.save(developerBankOperation);
                 }
             });
+
+            EquipeDevBank equipeDevBank = equipeDevBankRepository.findById(1L).orElse(null);
+            assert equipeDevBank != null;
+            System.out.println("Client banque => "+equipeDevBank.getDeveloper().getName());
+            if(equipeDevBank instanceof ExternDeveloper ){
+                System.out.println("get Badge developer  extern => "+((ExternDeveloper) equipeDevBank).getBadgeExtern());
+            }else if (equipeDevBank instanceof InternDeveloper){
+                System.out.println("get badge developer intern => "+((InternDeveloper)equipeDevBank).getBadgeIntern());
+            }
 
         };
     }
