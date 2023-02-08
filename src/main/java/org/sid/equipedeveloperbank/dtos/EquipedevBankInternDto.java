@@ -11,7 +11,7 @@ public class EquipedevBankInternDto extends EquipeDevBankDto{
     private double salaire;
     private Date createDate;
     private AccountStatus status;
-    private Developer developer;
+    private DeveloperDto developerDto;
     //private List<DeveloperBankOperation> developerBankOperations;
 }
 

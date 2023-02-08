@@ -29,7 +29,7 @@ public class EquipeDeveloperBankApplication {
         System.out.println("Hello is new project");
     }
 
-    // @Bean
+     @Bean
     CommandLineRunner addInBas(DeveloperRepository developerRepository,
                                EquipeDevBankRepository equipeDevBankRepository,
                                DeveloperBankOperationRepository developerBankOperationRepository) {
@@ -83,7 +83,7 @@ public class EquipeDeveloperBankApplication {
         };
     }
 
-    @Bean
+  //  @Bean
     CommandLineRunner addInBase(EquipeDevBankService equipeDevBankService) {
         return args -> {
             Stream.of("alex", "jhon", "yossri", "pedro").forEach(developerName -> {
@@ -92,6 +92,7 @@ public class EquipeDeveloperBankApplication {
                 developerDto.setEmail(developerName + "@bankBnp.com");
                 equipeDevBankService.saveDeveloper(developerDto);
             });
+
         };
     }
 
