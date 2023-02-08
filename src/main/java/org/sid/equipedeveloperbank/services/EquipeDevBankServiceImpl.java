@@ -7,12 +7,15 @@ import org.sid.equipedeveloperbank.dtos.EquipeDevBankDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankExternDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankInternDto;
 import org.sid.equipedeveloperbank.entities.Developer;
+import org.sid.equipedeveloperbank.exceptions.DeveloperNotFoundException;
 import org.sid.equipedeveloperbank.mappers.EquipeDeveloperMapperImp;
 import org.sid.equipedeveloperbank.repositories.DeveloperRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,22 +36,31 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
 
     @Override
     public DeveloperDto updateDeveloper(DeveloperDto developerDto) {
-        return null;
+        log.info("Update developer");
+        Developer developer = dtoDeveloperMapper.fromDeveloperDto(developerDto);
+        Developer updateDeveloper = developerRepository.save(developer);
+        return dtoDeveloperMapper.fromEntityDeveloper(updateDeveloper);
     }
 
     @Override
     public void deleteDeveloper(Long idDeveloper) {
-
+        developerRepository.deleteById(idDeveloper);
     }
 
     @Override
     public List<DeveloperDto> listDeveloperDto() {
-        return null;
+        List<Developer> developers = developerRepository.findAll();
+        List<DeveloperDto> developerDtos = developers.stream()
+                .map(developer-> dtoDeveloperMapper.fromEntityDeveloper(developer))
+                .collect(Collectors.toList());
+        return developerDtos;
     }
 
     @Override
-    public DeveloperDto getDeveloper(Long idDeveloper) {
-        return null;
+    public DeveloperDto getDeveloper(Long idDeveloper) throws DeveloperNotFoundException {
+        Developer developer = developerRepository.findById(idDeveloper).orElseThrow(() ->
+                new DeveloperNotFoundException("Developer Not Found"));
+        return dtoDeveloperMapper.fromEntityDeveloper(developer);
     }
 
     @Override

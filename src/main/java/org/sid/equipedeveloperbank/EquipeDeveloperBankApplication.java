@@ -29,18 +29,18 @@ public class EquipeDeveloperBankApplication {
         System.out.println("Hello is new project");
     }
 
-   // @Bean
+    // @Bean
     CommandLineRunner addInBas(DeveloperRepository developerRepository,
                                EquipeDevBankRepository equipeDevBankRepository,
-                               DeveloperBankOperationRepository developerBankOperationRepository){
+                               DeveloperBankOperationRepository developerBankOperationRepository) {
         return args -> {
-            Stream.of("alex","jhon","yossri").forEach(developerName->{
+            Stream.of("alex", "jhon", "yossri").forEach(developerName -> {
                 Developer developer = new Developer();
                 developer.setName(developerName);
-                developer.setEmail(developerName+"@bankBnp.com");
+                developer.setEmail(developerName + "@bankBnp.com");
                 developerRepository.save(developer);
             });
-            developerRepository.findAll().forEach(developer->{
+            developerRepository.findAll().forEach(developer -> {
                 ExternDeveloper externDeveloper = new ExternDeveloper();
                 externDeveloper.setDeveloper(developer);
                 externDeveloper.setBadgeExtern(BadgeExtern.BADGE_EXTERN);
@@ -58,14 +58,14 @@ public class EquipeDeveloperBankApplication {
                 equipeDevBankRepository.save(internDeveloper);
             });
 
-            equipeDevBankRepository.findAll().forEach(equipe->{
+            equipeDevBankRepository.findAll().forEach(equipe -> {
 
-                for(int i=0; i<10;i++){
+                for (int i = 0; i < 10; i++) {
                     DeveloperBankOperation developerBankOperation = new DeveloperBankOperation();
                     developerBankOperation.setAmount(100.0);
                     developerBankOperation.setDescription("Senior");
                     developerBankOperation.setOperationDate(new Date());
-                    developerBankOperation.setTypeOperation(developerBankOperation.getAmount()>=100.0?TypeOperation.PRIME:TypeOperation.CREDIT);
+                    developerBankOperation.setTypeOperation(developerBankOperation.getAmount() >= 100.0 ? TypeOperation.PRIME : TypeOperation.CREDIT);
                     developerBankOperation.setEquipeDevBank(equipe);
                     developerBankOperationRepository.save(developerBankOperation);
                 }
@@ -73,23 +73,23 @@ public class EquipeDeveloperBankApplication {
 
             EquipeDevBank equipeDevBank = equipeDevBankRepository.findById(1L).orElse(null);
             assert equipeDevBank != null;
-            System.out.println("Client banque => "+equipeDevBank.getDeveloper().getName());
-            if(equipeDevBank instanceof ExternDeveloper ){
-                System.out.println("get Badge developer  extern => "+((ExternDeveloper) equipeDevBank).getBadgeExtern());
-            }else if (equipeDevBank instanceof InternDeveloper){
-                System.out.println("get badge developer intern => "+((InternDeveloper)equipeDevBank).getBadgeIntern());
+            System.out.println("Client banque => " + equipeDevBank.getDeveloper().getName());
+            if (equipeDevBank instanceof ExternDeveloper) {
+                System.out.println("get Badge developer  extern => " + ((ExternDeveloper) equipeDevBank).getBadgeExtern());
+            } else if (equipeDevBank instanceof InternDeveloper) {
+                System.out.println("get badge developer intern => " + ((InternDeveloper) equipeDevBank).getBadgeIntern());
             }
 
         };
     }
 
-      @Bean
-    CommandLineRunner addInBase(EquipeDevBankService equipeDevBankService){
+    @Bean
+    CommandLineRunner addInBase(EquipeDevBankService equipeDevBankService) {
         return args -> {
-            Stream.of("alex","jhon","yossri","pedro").forEach(developerName->{
+            Stream.of("alex", "jhon", "yossri", "pedro").forEach(developerName -> {
                 DeveloperDto developerDto = new DeveloperDto();
                 developerDto.setName(developerName);
-                developerDto.setEmail(developerName+"@bankBnp.com");
+                developerDto.setEmail(developerName + "@bankBnp.com");
                 equipeDevBankService.saveDeveloper(developerDto);
             });
         };

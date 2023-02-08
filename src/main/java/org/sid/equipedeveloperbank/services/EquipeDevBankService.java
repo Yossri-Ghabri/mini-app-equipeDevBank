@@ -4,6 +4,7 @@ import org.sid.equipedeveloperbank.dtos.DeveloperDto;
 import org.sid.equipedeveloperbank.dtos.EquipeDevBankDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankExternDto;
 import org.sid.equipedeveloperbank.dtos.EquipedevBankInternDto;
+import org.sid.equipedeveloperbank.exceptions.DeveloperNotFoundException;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface EquipeDevBankService {
     DeveloperDto updateDeveloper(DeveloperDto developerDto);
     void deleteDeveloper(Long idDeveloper);
     List<DeveloperDto> listDeveloperDto();
-    DeveloperDto getDeveloper(Long idDeveloper);
+    DeveloperDto getDeveloper(Long idDeveloper) throws DeveloperNotFoundException;
     EquipedevBankExternDto saveExternDeveloper(Long idDeveloper, double salary);
     EquipedevBankInternDto saveInternDeveloper(Long idDeveloper, double salary);
     EquipeDevBankDto getEquipeDevBankDto(Long idEquipeDevBank);
