@@ -53,8 +53,8 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     }
 
     @Override
-    public void deleteDeveloper(Long idDeveloper) {
-        developerRepository.deleteById(idDeveloper);
+    public void deleteDeveloper(Long developerId) {
+        developerRepository.deleteById(developerId);
     }
 
     @Override

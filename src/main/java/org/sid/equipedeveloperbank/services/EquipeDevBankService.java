@@ -13,7 +13,7 @@ public interface EquipeDevBankService {
 
     DeveloperDto saveDeveloper(DeveloperDto developerDto);
     DeveloperDto updateDeveloper(DeveloperDto developerDto);
-    void deleteDeveloper(Long idDeveloper);
+    void deleteDeveloper(Long developerId);
     List<DeveloperDto> listDeveloperDto();
     DeveloperDto getDeveloper(Long idDeveloper) throws DeveloperNotFoundException;
     EquipedevBankExternDto saveExternDeveloper(Long idDeveloper, double salary) throws DeveloperNotFoundException;
