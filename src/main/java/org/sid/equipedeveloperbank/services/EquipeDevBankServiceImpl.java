@@ -169,11 +169,15 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     }
 
     @Override
-    public List<DeveloperBankOperation> listOperationByDeveloper(Long idEquipDevBank) {
-      //  List<DeveloperBankOperation> developerBankOperation = developerBankOperationRepository.findByOperationByDeveloper(idEquipDevBank);
-        //   return developerBankOperation.stream().map(operation ->
-        //         dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation)).collect(Collectors.toList());
-        return null;
+    public List<OperationByDeveloperDto> listOperationByDeveloper(String idEquipDevBank) {
+        List<DeveloperBankOperation> developerBankOperations = developerBankOperationRepository.findByEquipeDevBankId(idEquipDevBank);
+        List<OperationByDeveloperDto> operationByDeveloperDtos = developerBankOperations
+                .stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation))
+                .collect(Collectors.toList());
+        //   return developerBankOperations
+        //                .stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation))
+        //                .collect(Collectors.toList());
+        return operationByDeveloperDtos;
     }
 
 

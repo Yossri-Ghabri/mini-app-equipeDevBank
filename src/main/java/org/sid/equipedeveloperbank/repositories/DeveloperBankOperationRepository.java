@@ -11,5 +11,4 @@ import java.util.List;
 public interface DeveloperBankOperationRepository extends JpaRepository<DeveloperBankOperation, Long> {
     List<DeveloperBankOperation> findByEquipeDevBankId(String idEquip);
     Page<DeveloperBankOperation> findByEquipeDevBankId(String accountId, Pageable pageable);
-    //   List<DeveloperBankOperation> findByEquipDevBankId(Long Id);
 }
