@@ -13,8 +13,8 @@ import java.util.List;
 @Entity @Data @AllArgsConstructor @NoArgsConstructor
 public abstract class  EquipeDevBank {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    private String id;
     private double salaire;
     private Date createDate;
     @Enumerated(EnumType.STRING)

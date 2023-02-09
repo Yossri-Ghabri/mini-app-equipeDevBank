@@ -19,7 +19,6 @@ public class DeveloperBankOperation {
     private double amount;
     @Enumerated(EnumType.STRING)
     private TypeOperation typeOperation ;
-
     @ManyToOne
     private EquipeDevBank equipeDevBank ;
 }

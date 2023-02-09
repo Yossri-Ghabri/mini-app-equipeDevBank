@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +78,8 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
         Developer developer = developerRepository.findById(idDeveloper).orElseThrow(() ->
                 new DeveloperNotFoundException("Developer Not Found"));
         ExternDeveloper externDeveloper = new ExternDeveloper();
+        externDeveloper.setId(UUID.randomUUID().toString());
+
         externDeveloper.setDeveloper(developer);
         externDeveloper.setSalaire(salary);
         externDeveloper.setStatus(AccountStatus.CREATED);
@@ -91,6 +94,8 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
         Developer developer = developerRepository.findById(idDeveloper).orElseThrow(() ->
                 new DeveloperNotFoundException("Developer Not Found Exception"));
         InternDeveloper internDeveloper = new InternDeveloper();
+        internDeveloper.setId(UUID.randomUUID().toString());
+
         internDeveloper.setDeveloper(developer);
         internDeveloper.setBadgeIntern(BadgeIntern.BADGE_INTERN);
         internDeveloper.setSalaire(salary);
@@ -102,7 +107,7 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     }
 
     @Override
-    public EquipeDevBankDto getEquipeDevBankDto(Long idEquipDevBank) throws EquipeDevBankNotFoundException {
+    public EquipeDevBankDto getEquipeDevBankDto(String idEquipDevBank) throws EquipeDevBankNotFoundException {
         EquipeDevBank equipDevBank = equipeDevBankRepository.findById(idEquipDevBank).orElseThrow(() ->
                 new EquipeDevBankNotFoundException("EquipDevBank Not Found"));
         if (equipDevBank instanceof InternDeveloper) {
@@ -130,10 +135,10 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     }
 
     @Override
-    public void prime(Long idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, PrimeInterditSupeMaxException {
+    public void prime(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, PrimeInterditSupeMaxException {
         EquipeDevBank equipeDevBank = equipeDevBankRepository.findById(idAccountEquipeDev).orElseThrow(() ->
                 new EquipeDevBankNotFoundException("EquipeDevBank Not Found"));
-        if (amount <= 10000)
+        if (amount > 1000)
             throw new PrimeInterditSupeMaxException("Interdit sup max prime");
         DeveloperBankOperation developerBankOperation = new DeveloperBankOperation();
         developerBankOperation.setEquipeDevBank(equipeDevBank);
@@ -147,7 +152,7 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     }
 
     @Override
-    public void credit(Long idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, SalaireDeveloperNotSufficentException {
+    public void credit(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, SalaireDeveloperNotSufficentException {
         EquipeDevBank equipeDevBank = equipeDevBankRepository.findById(idAccountEquipeDev).orElseThrow(() ->
                 new EquipeDevBankNotFoundException("EquipeDevBank Not Found"));
         if (equipeDevBank.getSalaire() < 0)
@@ -165,7 +170,7 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
 
     @Override
     public List<DeveloperBankOperation> listOperationByDeveloper(Long idEquipDevBank) {
-        //List<DeveloperBankOperation> developerBankOperation = developerBankOperationRepository.findAllById(idEquipDevBank);
+      //  List<DeveloperBankOperation> developerBankOperation = developerBankOperationRepository.findByOperationByDeveloper(idEquipDevBank);
         //   return developerBankOperation.stream().map(operation ->
         //         dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation)).collect(Collectors.toList());
         return null;

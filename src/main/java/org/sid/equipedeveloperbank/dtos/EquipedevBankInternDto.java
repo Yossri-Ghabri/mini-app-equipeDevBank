@@ -7,7 +7,7 @@ import org.sid.equipedeveloperbank.enums.AccountStatus;
 import java.util.Date;
 @Data
 public class EquipedevBankInternDto extends EquipeDevBankDto{
-    private Long id;
+    private String id;
     private double salaire;
     private Date createDate;
     private AccountStatus status;

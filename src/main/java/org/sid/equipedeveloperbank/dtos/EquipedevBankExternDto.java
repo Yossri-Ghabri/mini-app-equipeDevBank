@@ -12,7 +12,7 @@ import java.util.List;
 public class EquipedevBankExternDto extends EquipeDevBankDto {
 
 
-    private Long id;
+    private String id;
     private double salaire;
     private Date createDate;
     private AccountStatus status;

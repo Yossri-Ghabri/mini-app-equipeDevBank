@@ -18,11 +18,11 @@ public interface EquipeDevBankService {
     DeveloperDto getDeveloper(Long idDeveloper) throws DeveloperNotFoundException;
     EquipedevBankExternDto saveExternDeveloper(Long idDeveloper, double salary) throws DeveloperNotFoundException;
     EquipedevBankInternDto saveInternDeveloper(Long idDeveloper, double salary) throws DeveloperNotFoundException;
-    EquipeDevBankDto getEquipeDevBankDto(Long idEquipeDevBank) throws EquipeDevBankNotFoundException;
+    EquipeDevBankDto getEquipeDevBankDto(String idEquipeDevBank) throws EquipeDevBankNotFoundException;
     List<EquipeDevBankDto> listEquipeDevBank();
-    void prime(Long idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, PrimeInterditSupeMaxException;
-    void credit(Long idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, SalaireDeveloperNotSufficentException;
+    void prime(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, PrimeInterditSupeMaxException;
+    void credit(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, SalaireDeveloperNotSufficentException;
    // List<OperationByDeveloperDto> listOperationByDeveloper(Long idEquipDevBank);
-    List<DeveloperBankOperation> listOperationByDeveloper(Long id);
+    List<DeveloperBankOperation> listOperationByDeveloper(Long idAccount);
 
 }
