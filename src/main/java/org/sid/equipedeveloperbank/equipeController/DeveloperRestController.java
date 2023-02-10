@@ -33,7 +33,8 @@ public class DeveloperRestController {
 
 
     @PutMapping("/updateDeveloper/{id}")
-    public DeveloperDto updateDeveloper(@PathVariable Long id, @RequestBody DeveloperDto developerDto){
+    public DeveloperDto updateDeveloper(@PathVariable Long id,
+                                        @RequestBody DeveloperDto developerDto){
         developerDto.setId(id);
         return equipeDevBankService.updateDeveloper(developerDto);
     }

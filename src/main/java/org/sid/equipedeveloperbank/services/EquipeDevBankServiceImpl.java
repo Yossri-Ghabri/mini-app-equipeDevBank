@@ -79,7 +79,6 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
                 new DeveloperNotFoundException("Developer Not Found"));
         ExternDeveloper externDeveloper = new ExternDeveloper();
         externDeveloper.setId(UUID.randomUUID().toString());
-
         externDeveloper.setDeveloper(developer);
         externDeveloper.setSalaire(salary);
         externDeveloper.setStatus(AccountStatus.CREATED);
