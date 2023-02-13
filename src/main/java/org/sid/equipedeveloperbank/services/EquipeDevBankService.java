@@ -23,5 +23,6 @@ public interface EquipeDevBankService {
     void prime(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, PrimeInterditSupeMaxException;
     void credit(String idAccountEquipeDev, double amount, String description) throws EquipeDevBankNotFoundException, SalaireDeveloperNotSufficentException;
     List<OperationByDeveloperDto> listOperationByDeveloper(String idAccount);
+    EquipHistoryDto historyEquip(String idEquip, int page, int size) throws EquipeDevBankNotFoundException;
 
 }

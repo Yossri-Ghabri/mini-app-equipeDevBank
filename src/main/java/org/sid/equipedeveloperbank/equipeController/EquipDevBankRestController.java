@@ -2,14 +2,12 @@ package org.sid.equipedeveloperbank.equipeController;
 
 
 import lombok.AllArgsConstructor;
+import org.sid.equipedeveloperbank.dtos.EquipHistoryDto;
 import org.sid.equipedeveloperbank.dtos.EquipeDevBankDto;
 import org.sid.equipedeveloperbank.dtos.OperationByDeveloperDto;
 import org.sid.equipedeveloperbank.exceptions.EquipeDevBankNotFoundException;
 import org.sid.equipedeveloperbank.services.EquipeDevBankService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,4 +32,10 @@ public class EquipDevBankRestController {
         return equipeDevBankService.listOperationByDeveloper(idEquipBank);
     }
 
+    @GetMapping("/getHistoryOperation/{id}")
+    public EquipHistoryDto getHistoryOperation(@PathVariable String id,
+                                               @RequestParam(name="page", defaultValue = "0") int page,
+                                               @RequestParam(name = "size", defaultValue = "5") int size) throws EquipeDevBankNotFoundException {
+        return equipeDevBankService.historyEquip(id, page, size);
+    }
 }

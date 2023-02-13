@@ -16,6 +16,8 @@ import org.sid.equipedeveloperbank.mappers.EquipeDeveloperMapperImp;
 import org.sid.equipedeveloperbank.repositories.DeveloperBankOperationRepository;
 import org.sid.equipedeveloperbank.repositories.DeveloperRepository;
 import org.sid.equipedeveloperbank.repositories.EquipeDevBankRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,13 +173,34 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
     public List<OperationByDeveloperDto> listOperationByDeveloper(String idEquipDevBank) {
         List<DeveloperBankOperation> developerBankOperations = developerBankOperationRepository.findByEquipeDevBankId(idEquipDevBank);
         List<OperationByDeveloperDto> operationByDeveloperDtos = developerBankOperations
-                .stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation))
+                .stream().map(operation -> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation))
                 .collect(Collectors.toList());
         //   return developerBankOperations
         //                .stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation))
         //                .collect(Collectors.toList());
         return operationByDeveloperDtos;
     }
+
+    @Override
+    public EquipHistoryDto historyEquip(String idEquip, int page, int size) throws EquipeDevBankNotFoundException {
+       EquipeDevBank equipDevBank = equipeDevBankRepository.findById(idEquip).orElse(null);
+       if(equipDevBank==null)
+           throw new EquipeDevBankNotFoundException("Equip Not Found");
+       Page<DeveloperBankOperation> developerBankOperations = developerBankOperationRepository.findByEquipeDevBankId(idEquip, PageRequest.of(page, size));
+       List<OperationByDeveloperDto> operationByDeveloperDtos = developerBankOperations.stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation)).collect(Collectors.toList());
+
+       EquipHistoryDto equipHistoryDto =  new EquipHistoryDto();
+        equipHistoryDto.setIdEquip(idEquip);
+        equipHistoryDto.setName(equipDevBank.getDeveloper().getName());
+        equipHistoryDto.setSalaire(equipDevBank.getSalaire());
+        equipHistoryDto.setCurrentPage(page);
+        equipHistoryDto.setSizePage(size);
+        equipHistoryDto.setTotalPage(developerBankOperations.getTotalPages());
+        equipHistoryDto.setOperationByDeveloperDtoList(operationByDeveloperDtos);
+        return equipHistoryDto;
+    }
+
+
 
 
 }
