@@ -56,6 +56,9 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
 
     @Override
     public void deleteDeveloper(Long developerId) {
+        if(developerId==null){
+            log.error("id is null");
+        }
         developerRepository.deleteById(developerId);
     }
 
@@ -183,13 +186,14 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
 
     @Override
     public EquipHistoryDto historyEquip(String idEquip, int page, int size) throws EquipeDevBankNotFoundException {
-       EquipeDevBank equipDevBank = equipeDevBankRepository.findById(idEquip).orElse(null);
-       if(equipDevBank==null)
-           throw new EquipeDevBankNotFoundException("Equip Not Found");
-       Page<DeveloperBankOperation> developerBankOperations = developerBankOperationRepository.findByEquipeDevBankId(idEquip, PageRequest.of(page, size));
-       List<OperationByDeveloperDto> operationByDeveloperDtos = developerBankOperations.stream().map(operation-> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation)).collect(Collectors.toList());
+        EquipeDevBank equipDevBank = equipeDevBankRepository.findById(idEquip).orElse(null);
+        if (equipDevBank == null)
+            throw new EquipeDevBankNotFoundException("Equip Not Found");
+        Page<DeveloperBankOperation> developerBankOperations = developerBankOperationRepository
+                .findByEquipeDevBankId(idEquip, PageRequest.of(page, size));
+        List<OperationByDeveloperDto> operationByDeveloperDtos = developerBankOperations.stream().map(operation -> dtoDeveloperMapper.fromEntityDeveloperBankOperation(operation)).collect(Collectors.toList());
 
-       EquipHistoryDto equipHistoryDto =  new EquipHistoryDto();
+        EquipHistoryDto equipHistoryDto = new EquipHistoryDto();
         equipHistoryDto.setIdEquip(idEquip);
         equipHistoryDto.setName(equipDevBank.getDeveloper().getName());
         equipHistoryDto.setSalaire(equipDevBank.getSalaire());
@@ -199,8 +203,6 @@ public class EquipeDevBankServiceImpl implements EquipeDevBankService {
         equipHistoryDto.setOperationByDeveloperDtoList(operationByDeveloperDtos);
         return equipHistoryDto;
     }
-
-
 
 
 }
