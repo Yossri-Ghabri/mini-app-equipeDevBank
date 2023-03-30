@@ -2,7 +2,6 @@ package org.sid.equipedeveloperbank.dtos;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 
